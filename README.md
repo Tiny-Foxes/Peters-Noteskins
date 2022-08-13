@@ -1,4 +1,4 @@
-This is a fork of MegaSphere/[Pete-Lawrence's](https://pete-lawrence.github.io) [StepMania noteskins repository](https://github.com/Pete-Lawrence/Peters-Noteskins) for StepMania; the focus of this fork is to focus on adding Project OutFox-optimized versions of its StepMania 5.x noteskins, namely by:
+This is a fork of MegaSphere/[Pete-Lawrence's](https://pete-lawrence.github.io) [StepMania noteskins repository](https://github.com/Pete-Lawrence/Peters-Noteskins); the focus of this fork is to focus on adding Project OutFox-optimized versions of its StepMania 5.x noteskins, namely by:
 
 * Adjusting their code to adhere to its developers' best practices for Lua code style (i.e. removing use of `cmd` blocks, replacing semicolons with commas, etc.)
 * Adjusting their code to support Project OutFox's Lua timing system (namely, recognizing judgements beyond W1, as well as using a different method to color the note explosion sprite in order to support judgement colors defined by themes)
