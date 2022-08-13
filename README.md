@@ -2,6 +2,7 @@ This is a fork of MegaSphere/[Pete-Lawrence's](https://pete-lawrence.github.io) 
 
 * Adjusting their code to adhere to its developers' best practices for Lua code style (i.e. removing use of `cmd` blocks, replacing semicolons with commas, etc.)
 * Adjusting their code to support Project OutFox's Lua timing system (namely, recognizing judgements beyond W1, as well as using a different method to color the note explosion sprite in order to support judgement colors defined by themes)
+* Adding sprites for OutFox-specific notes such as lift holds and mine holds.
 
 For consistency, the OutFox versions of the noteskins will be renamed to follow the naming conventions used for the noteskins in the stock Project OutFox installation. To keep this repository focused, content unrelated to noteskins, as well as WIPs and the versions of the noteskins for pre-StepMania 5.x builds, have also been removed.
 
