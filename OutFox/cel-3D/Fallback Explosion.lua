@@ -5,18 +5,18 @@
 --The NOTESKIN:LoadActor() just tells us the name of the image the Actor redirects on.
 --Oh and if you wonder about the "Button" in the "NOTESKIN:LoadActor( )" it means that it will check for that direction.
 --So you dont have to do "Down" or "Up" or "Left" etc for every direction which will save space ;)
-local cw5 = JudgmentLineToColor("JudgmentLine_W5")
-local cw4 = JudgmentLineToColor("JudgmentLine_W4")
-local cw3 = JudgmentLineToColor("JudgmentLine_W3")
-local cw2 = JudgmentLineToColor("JudgmentLine_W2")
-local cw1 = JudgmentLineToColor("JudgmentLine_W1")
-local cwpro5 = JudgmentLineToColor("JudgmentLine_ProW5")
-local cwpro4 = JudgmentLineToColor("JudgmentLine_ProW4")
-local cwpro3 = JudgmentLineToColor("JudgmentLine_ProW3")
-local cwpro2 = JudgmentLineToColor("JudgmentLine_ProW2")
-local cwpro1 = JudgmentLineToColor("JudgmentLine_ProW1")
+local cw5 = BoostColor(JudgmentLineToColor("JudgmentLine_W5"), 1.1)
+local cw4 = BoostColor(JudgmentLineToColor("JudgmentLine_W4"), 1.1)
+local cw3 = BoostColor(JudgmentLineToColor("JudgmentLine_W3"), 1.1)
+local cw2 = BoostColor(JudgmentLineToColor("JudgmentLine_W2"), 1.1)
+local cw1 = BoostColor(JudgmentLineToColor("JudgmentLine_W1"), 1.1)
+local cwpro5 = BoostColor(JudgmentLineToColor("JudgmentLine_ProW5"), 1.1)
+local cwpro4 = BoostColor(JudgmentLineToColor("JudgmentLine_ProW4"), 1.1)
+local cwpro3 = BoostColor(JudgmentLineToColor("JudgmentLine_ProW3"), 1.1)
+local cwpro2 = BoostColor(JudgmentLineToColor("JudgmentLine_ProW2"), 1.1)
+local cwpro1 = BoostColor(JudgmentLineToColor("JudgmentLine_ProW1"), 1.1)
 
-local t = Def.ActorFrame {
+return Def.ActorFrame {
 	--Hold Explosion Commands
 	NOTESKIN:LoadActor( Var "Button", "Hold Explosion" ) .. {
 		HoldingOnCommand=NOTESKIN:GetMetricA("HoldGhostArrow", "HoldingOnCommand");
@@ -32,17 +32,23 @@ local t = Def.ActorFrame {
 	--Dim Explosion Commands
 	NOTESKIN:LoadActor( Var "Button", "Tap Explosion Dim" ) .. {
 		InitCommand=function(self) self:diffusealpha(0) end,
-		W5Command=function (self) self:finishtweening():diffuse(cw5):zoom(1):diffusealpha(1.0):accelerate(0.15):diffusealpha(0):zoom(1.1) end,
-		W4Command=function (self) self:finishtweening():diffuse(cw4):zoom(1):diffusealpha(1.0):accelerate(0.15):diffusealpha(0):zoom(1.1) end,
-		W3Command=function (self) self:finishtweening():diffuse(cw3):zoom(1):diffusealpha(1.0):accelerate(0.15):diffusealpha(0):zoom(1.1) end,
-		W2Command=function (self) self:finishtweening():diffuse(cw2):zoom(1):diffusealpha(1.0):accelerate(0.15):diffusealpha(0):zoom(1.1) end,
-		W1Command=function (self) self:finishtweening():diffuse(cw1):zoom(1):diffusealpha(1.0):accelerate(0.15):diffusealpha(0):zoom(1.1) end,
-		ProW1Command=function (self) self:finishtweening():diffuse(cwpro1):zoom(1):diffusealpha(1.0):accelerate(0.15):diffusealpha(0):zoom(1.3) end,
-		ProW2Command=function (self) self:finishtweening():diffuse(cwpro2):zoom(1):diffusealpha(1.0):accelerate(0.15):diffusealpha(0):zoom(1.3) end,
-		ProW3Command=function (self) self:finishtweening():diffuse(cwpro3):zoom(1):diffusealpha(1.0):accelerate(0.15):diffusealpha(0):zoom(1.3) end,
-		ProW4Command=function (self) self:finishtweening():diffuse(cwpro4):zoom(1):diffusealpha(1.0):accelerate(0.15):diffusealpha(0):zoom(1.3) end,
-		ProW5Command=function (self) self:finishtweening():diffuse(cwpro5):zoom(1):diffusealpha(1.0):accelerate(0.15):diffusealpha(0):zoom(1.3) end,
+		W5Command=function (self) self:finishtweening():stopeffect():diffuse(cw5):diffusealpha(1.2):zoom(1.1):accelerate(0.15):zoom(1):diffusealpha(0) end,
+		W4Command=function (self) self:finishtweening():stopeffect():diffuse(cw4):diffusealpha(1.2):zoom(1.1):accelerate(0.15):zoom(1):diffusealpha(0) end,
+		W3Command=function (self) self:finishtweening():stopeffect():diffuse(cw3):diffusealpha(1.2):zoom(1.1):accelerate(0.15):zoom(1):diffusealpha(0) end,
+		W2Command=function (self) self:finishtweening():stopeffect():diffuse(cw2):diffusealpha(1.2):zoom(1.1):accelerate(0.15):zoom(1):diffusealpha(0) end,
+		W1Command=function (self) self:finishtweening():diffuse(cw1):diffusealpha(1.2):zoom(1.1):accelerate(0.15):zoom(1):diffusealpha(0):glowshift():effectperiod(0.05):effectcolor1(1,1,1,0):effectcolor2(1,1,1,0.5) end,
+		ProW1Command=function (self) self:finishtweening():diffuse(cwpro1):diffusealpha(1.2):zoom(1.1):accelerate(0.15):zoom(1):diffusealpha(0):glowshift():effectperiod(0.05):effectcolor1(1,1,1,0):effectcolor2(1,1,1,0.5) end,
+		ProW2Command=function (self) self:finishtweening():diffuse(cwpro2):diffusealpha(1.2):zoom(1.1):accelerate(0.15):zoom(1):diffusealpha(0):glowshift():effectperiod(0.05):effectcolor1(1,1,1,0):effectcolor2(1,1,1,0.5) end,
+		ProW3Command=function (self) self:finishtweening():diffuse(cwpro3):diffusealpha(1.2):zoom(1.1):accelerate(0.15):zoom(1):diffusealpha(0):glowshift():effectperiod(0.05):effectcolor1(1,1,1,0):effectcolor2(1,1,1,0.5) end,
+		ProW4Command=function (self) self:finishtweening():diffuse(cwpro4):diffusealpha(1.2):zoom(1.1):accelerate(0.15):zoom(1):diffusealpha(0):glowshift():effectperiod(0.05):effectcolor1(1,1,1,0):effectcolor2(1,1,1,0.5) end,
+		ProW5Command=function (self) self:finishtweening():diffuse(cwpro5):diffusealpha(1.2):zoom(1.1):accelerate(0.15):zoom(1):diffusealpha(0):glowshift():effectperiod(0.05):effectcolor1(1,1,1,0):effectcolor2(1,1,1,0.5) end,
 		JudgmentCommand=function(self) self:finishtweening() end,
+		BrightCommand=function(self) self:visible(true) end,
+		DimCommand=function(self) self:visible(true) end
+	},
+	NOTESKIN:LoadActor( Var "Button", "Tap Explosion Dim" ) .. {
+		InitCommand=function(self) self:diffusealpha(0) end,
+		HeldCommand=function (self) self:finishtweening():stopeffect():diffuse(cw2):diffusealpha(1.2):zoom(1.1):accelerate(0.09):zoom(1):diffusealpha(0) end,
 		BrightCommand=function(self) self:visible(true) end,
 		DimCommand=function(self) self:visible(true) end
 	},
@@ -52,4 +58,3 @@ local t = Def.ActorFrame {
 		HitMineCommand=NOTESKIN:GetMetricA("GhostArrowBright", "HitMineCommand")
 	}
 }
-return t

@@ -1,10 +1,21 @@
-local ret = ... or {};
+--Unlimited Stepman Works Noteskin.lua for SM 5.0.12
+
+--I am the bone of my noteskin
+--Arrows are my body, and explosions are my blood
+--I have created over a thousand noteskins
+--Unknown to death
+--Nor known to life
+--Have withstood pain to create many noteskins
+--Yet these hands will never hold anything
+--So as I pray, Unlimited Stepman Works
+
+local USWN = {};
 
 --Defining on which direction the other directions should be bassed on
 --This will let us use less files which is quite handy to keep the noteskin directory nice
 --Do remember this will Redirect all the files of that Direction to the Direction its pointed to
 --If you only want some files to be redirected take a look at the "custom hold/roll per direction"
-ret.RedirTable =
+USWN.ButtonRedir =
 {
 	Up = "Down",
 	Down = "Down",
@@ -14,92 +25,29 @@ ret.RedirTable =
 	UpRight = "Down",
 };
 
+-- Defined the parts to be rotated at which degree
+USWN.Rotate =
+{
+	Up = 180,
+	Down = 0,
+	Left = 90,
+	Right = -90,
+	UpLeft = 135,
+	UpRight = 225,
+};
 
-local OldRedir = ret.Redir;
-ret.Redir = function(sButton, sElement)
-	sButton, sElement = OldRedir(sButton, sElement);
 
-	--We want to use custom hold/roll per direction, but
-	--Keep global hold/roll heads and explosions.	
-	if not string.find(sElement, "Head") and
-	not string.find(sElement, "Explosion") then
-		if string.find(sElement, "Hold") or
-		string.find(sElement, "Roll") then
-			return sButton, sElement;
-		end
-	end
-	
-	sButton = ret.RedirTable[sButton];
-	
-	if sElement == "Tap Fake"
-	then
-		sElement = "Tap Note";
-	end
-
-	if sElement == "Roll Head Active"
-	then
-		sElement = "Hold Head Active";
-	end
-	
-	if sElement == "Roll Head Inactive"
-	then
-		sElement = "Hold Head Inactive";
-	end
-
-	return sButton, sElement;
-end
-
-local OldFunc = ret.Load;
-function ret.Load()
-	local t = OldFunc();
-
-	--Explosion should not be rotated; it calls other actors.
-	if Var "Element" == "Explosion"	then
-		t.BaseRotationZ = nil;
-	end
-	
-	if Var "Button" == "UpLeft" and Var "Element" == "Hold Head Active"	then
-		t.BaseRotationZ = 135;
-	end
-	
-	if Var "Button" == "UpLeft" and Var "Element" == "Hold Head Inactive"	then
-		t.BaseRotationZ = 135;
-	end
-	
-	if Var "Button" == "UpLeft" and Var "Element" == "Roll Head Active"	then
-		t.BaseRotationZ = 135;
-	end
-	
-	if Var "Button" == "UpLeft" and Var "Element" == "Roll Head Inactive"	then
-		t.BaseRotationZ = 135;
-	end
-	
-	if Var "Button" == "UpRight" and Var "Element" == "Hold Head Active"	then
-		t.BaseRotationZ = 225;
-	end
-	
-	if Var "Button" == "UpRight" and Var "Element" == "Hold Head Inactive"	then
-		t.BaseRotationZ = 225;
-	end
-	
-	if Var "Button" == "UpRight" and Var "Element" == "Roll Head Active"	then
-		t.BaseRotationZ = 225;
-	end
-	
-	if Var "Button" == "UpRight" and Var "Element" == "Roll Head Inactive"	then
-		t.BaseRotationZ = 225;
-	end
-	
-	return t;
-end
--- >
-
+--Define elements that need to be redirected
+USWN.ElementRedir =
+{
+	["Tap Fake"] = "Tap Note",
+	["Roll Explosion"] = "Hold Explosion",
+};
 
 -- Parts of noteskins which we want to rotate
-ret.PartsToRotate =
+USWN.PartsToRotate =
 {
 	["Receptor"] = true,
-	["Tap Explosion Dim"] = true,
 	["Tap Note"] = true,
 	["Tap Fake"] = true,
 	["Tap Lift"] = true,
@@ -110,21 +58,12 @@ ret.PartsToRotate =
 	["Roll Explosion"] = true,
 	["Roll Head Active"] = true,
 	["Roll Head Inactive"] = true,
-};
--- Defined the parts to be rotated at which degree
-ret.Rotate =
-{
-	Up = 180,
-	Down = 0,
-	Left = 90,
-	Right = -90,
-	UpLeft = 135,
-	UpRight = 225,
+	["Tap Explosion Dim"] = true,
 };
 
 -- Parts that should be Redirected to _Blank.png
 -- you can add/remove stuff if you want
-ret.Blank =
+USWN.Blank =
 {
 	["Hold Topcap Active"] = true,
 	["Hold Topcap Inactive"] = true,
@@ -134,7 +73,53 @@ ret.Blank =
 	["Hold Tail Inactive"] = true,
 	["Roll Tail Active"] = true,
 	["Roll Tail Inactive"] = true,
+	["Tap Explosion Bright"] = true,
 };
 
--- dont forget to close the ret cuz else it wont work ;>
-return ret;
+-- < 
+--Between here we usally put all the commands the noteskin.lua needs to do, some are extern in other files
+--If you need help with lua go to http://dguzek.github.io/Lua-For-SM5/API/Lua.xml there are a bunch of codes there
+--Also check out common it has a load of lua codes in files there
+--Just play a bit with lua its not that hard if you understand coding
+--But SM can be an ass in some cases, and some codes jut wont work if you dont have the noteskin on FallbackNoteSkin=common in the metric.ini 
+function USWN.Load()
+	local sButton = Var "Button";
+	local sElement = Var "Element";
+
+	local Button = USWN.ButtonRedir[sButton] or sButton;	
+			
+	--Setting global element
+	local Element = USWN.ElementRedir[sElement] or sElement;
+
+	if string.find(sElement, "Head") then
+		Element = "Tap Note";
+	end
+	
+	--Returning first part of the code, The redirects, Second part is for commands
+	local t = LoadActor(NOTESKIN:GetPath(Button,Element));
+	
+	--Set blank redirects
+	if USWN.Blank[sElement] then
+		t = Def.Actor {};
+		--Check if element is sprite only
+		if Var "SpriteOnly" then
+			t = LoadActor(NOTESKIN:GetPath("","_blank"));
+		end
+	end
+	
+	print(sElement, USWN.PartsToRotate[sElement])
+	if USWN.PartsToRotate[sElement] then
+		t.BaseRotationZ = USWN.Rotate[sButton] or nil;
+	end
+	
+	--Explosion should not be rotated, It calls other actors
+	if sElement == "Explosion" then
+		t.BaseRotationZ = nil;
+	end
+		
+	return t;
+end
+-- >
+
+-- dont forget to return cuz else it wont work ;>
+return USWN;

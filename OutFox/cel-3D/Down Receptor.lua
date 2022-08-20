@@ -2,9 +2,9 @@
 --If you dont know how "NOTESKIN:GetMetricA" works here is an explanation.
 --NOTESKIN:GetMetricA("The [Group] in the metrics.ini", "The actual Command to fallback on in the metrics.ini");
 
-local t = Def.ActorFrame {
+return Def.ActorFrame {
 	Def.Sprite {
-		Texture=NOTESKIN:GetPath( '_down', 'Receptor Go' ),
+		Texture=NOTESKIN:GetPath( '_down', 'Receptor tex' ),
 		Frame0000=0,
 		Delay0000=1,
 		Frame0001=0,
@@ -29,7 +29,7 @@ local t = Def.ActorFrame {
 		ProW5Command=NOTESKIN:GetMetricA("ReceptorArrow", "W1Command")
 	},
 	Def.Sprite {
-		Texture=NOTESKIN:GetPath( '_down', 'Receptor Go' ),
+		Texture=NOTESKIN:GetPath( '_down', 'Receptor tex' ),
 		Frame0000=0,
 		Delay0000=0.25,
 		Frame0001=0,
@@ -56,7 +56,6 @@ local t = Def.ActorFrame {
 		ProW5Command=NOTESKIN:GetMetricA("ReceptorArrow", "W1Command")
 	},
 }
-return t;
 
 --[[
 Effecttiming Info
