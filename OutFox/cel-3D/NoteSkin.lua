@@ -107,7 +107,6 @@ function USWN.Load()
 		end
 	end
 	
-	print(sElement, USWN.PartsToRotate[sElement])
 	if USWN.PartsToRotate[sElement] then
 		t.BaseRotationZ = USWN.Rotate[sButton] or nil;
 	end
